@@ -1,28 +1,65 @@
-# Online Examination System
+# 🚀 Online Examination System
 
-A full-stack web application built using React and Spring Boot that simulates a real-world online exam platform.
+A full-stack web application that simulates a real-world online exam platform with features like auto-save, resume functionality, timer-based submission, and detailed result analysis.
 
-## 🚀 Key Features
+---
 
-- ⏳ Timer-based exams with auto-submit
-- 💾 Auto-save & resume functionality (even after refresh)
-- 📊 Detailed result analysis with correct answers
-- 🔢 Question navigation panel (jump between questions)
-- 🔒 Prevent reattempt after submission
-- 👤 User dashboard with role-based access
+## 🔥 Key Features
 
-## 🧠 What Makes It Unique
+* ⏳ Timer-based Exams with automatic submission
+* 💾 Auto-save & Resume (even after refresh or tab close)
+* 📊 Result Analysis with correct answer review
+* 🔢 Question Navigation Panel (jump between questions)
+* 🔄 Resume Detection Prompt on dashboard
+* 🚫 Prevent Reattempt after submission
+* 👤 User Dashboard with session handling
 
-- Implemented state persistence using localStorage for seamless resume experience  
-- Handled edge cases like refresh, tab switch, and time expiry  
-- Designed UI similar to real exam systems with navigation and progress indicators  
+---
+
+## 🧠 Highlights
+
+* Implemented state persistence using localStorage
+* Handled edge cases like refresh, time expiry, and partial progress
+* Designed UI similar to real exam platforms
+* Built modular frontend + REST API backend architecture
+
+---
 
 ## 🛠 Tech Stack
 
-- Frontend: React (Vite)
-- Backend: Spring Boot
-- Database: MySQL
-- State Management: React Hooks
-- Storage: LocalStorage
+* Frontend: React (Vite)
+* Backend: Spring Boot
+* Database: MySQL
+* State Management: React Hooks
+* Persistence: LocalStorage
+
+---
 
 ## 📂 Project Structure
+
+frontend/   → React application
+backend/    → Spring Boot REST APIs
+
+---
+
+## ▶️ How to Run
+
+### Backend
+
+cd backend
+mvn spring-boot:run
+
+### Frontend
+
+cd frontend
+npm install
+npm run dev
+
+---
+
+## 📈 Future Improvements
+
+* Move persistence to backend (multi-device support)
+* Add JWT authentication
+* Admin panel for creating exams
+* Analytics dashboard for performance tracking
