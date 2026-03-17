@@ -1,0 +1,14 @@
+# frontend
+node_modules/
+dist/
+build/
+
+# backend
+target/
+*.log
+
+# env
+.env
+
+# misc
+.DS_Store
