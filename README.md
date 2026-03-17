@@ -1,4 +1,4 @@
-# 🚀 Online Examination System
+# Online Examination System
 
 A full-stack web application that simulates a real-world online exam platform with features like auto-save, resume functionality, timer-based submission, and detailed result analysis.
 
