@@ -47,6 +47,26 @@ body {
   background-color: #141e30;
 }
 
+.error-msg {
+  color: #e74c3c;
+  background: #fdecea;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.link-text {
+  color: #243b55;
+  margin-top: 15px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.link-text:hover {
+  text-decoration: underline;
+}
+
 .password-wrapper {
   position: relative;
 }

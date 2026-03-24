@@ -11,24 +11,27 @@ function Login() {
 
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     setForm({
       ...form,
       [e.target.name]: e.target.value
     });
+    setError("");
   };
 
   const handleLogin = async () => {
     if (!form.email || !form.password) {
-      alert("Please enter email and password");
+      setError("Please enter email and password");
       return;
     }
 
     try {
       setLoading(true);
+      setError("");
 
-      const response = await fetch("http://localhost:8080/users");
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/users`);
 
       if (!response.ok) {
         throw new Error("Server error");
@@ -44,14 +47,14 @@ function Login() {
 
       if (user) {
         localStorage.setItem("user", JSON.stringify(user));
-        localStorage.setItem("role", user.role || "STUDENT"); // 🔥 important
+        localStorage.setItem("role", user.role || "STUDENT");
         navigate("/dashboard");
       } else {
-        alert("Invalid email or password");
+        setError("Invalid email or password");
       }
-    } catch (error) {
-      console.error(error);
-      alert("Backend not running or error occurred");
+    } catch (err) {
+      console.error(err);
+      setError("Cannot connect to server. Please try again later.");
     } finally {
       setLoading(false);
     }
@@ -62,9 +65,13 @@ function Login() {
       <div className="auth-card">
         <h2>Welcome Back</h2>
 
+        {error && <p className="error-msg">{error}</p>}
+
         <input
           name="email"
+          type="email"
           placeholder="Email"
+          value={form.email}
           onChange={handleChange}
         />
 
@@ -73,6 +80,7 @@ function Login() {
             type={showPassword ? "text" : "password"}
             name="password"
             placeholder="Password"
+            value={form.password}
             onChange={handleChange}
           />
           <span

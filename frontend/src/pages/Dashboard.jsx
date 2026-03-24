@@ -45,10 +45,10 @@ export default function Dashboard() {
   // Fetch exams
   useEffect(() => {
     if (tab === "exam") {
-      fetch("http://localhost:8080/exams")
+      fetch(`${import.meta.env.VITE_API_URL}/exams`)
         .then(res => res.json())
         .then(data => setExams(data))
-        .catch(() => alert("Error fetching exams"));
+        .catch((err) => console.error("Error fetching exams:", err));
     }
   }, [tab]);
 

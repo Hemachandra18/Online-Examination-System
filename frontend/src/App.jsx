@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
 import ExamPage from "./pages/ExamPage";
+import ProtectedRoute from "./Components/ProtectedRoute";
 
 function App() {
   return (
@@ -12,11 +13,24 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
 
-      {/* Main app */}
-      <Route path="/dashboard" element={<Dashboard />} />
+      {/* Protected routes */}
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      />
 
-      {/* Full screen exam */}
-      <Route path="/exam/:id" element={<ExamPage />} />
+      <Route
+        path="/exam/:id"
+        element={
+          <ProtectedRoute>
+            <ExamPage />
+          </ProtectedRoute>
+        }
+      />
     </Routes>
   );
 }

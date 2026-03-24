@@ -10,37 +10,66 @@ function Register() {
     password: ""
   });
 
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const handleChange = (e) => {
     setForm({
       ...form,
       [e.target.name]: e.target.value
     });
+    setError("");
+  };
+
+  const validateForm = () => {
+    if (!form.name || !form.email || !form.password) {
+      return "All fields are required";
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(form.email)) {
+      return "Please enter a valid email address";
+    }
+    if (form.password.length < 6) {
+      return "Password must be at least 6 characters";
+    }
+    return "";
   };
 
   const handleRegister = async () => {
-    if (!form.name || !form.email || !form.password) {
-      alert("All fields are required");
+    const validationError = validateForm();
+    if (validationError) {
+      setError(validationError);
       return;
     }
 
-    const response = await fetch("http://localhost:8080/users", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        name: form.name,
-        email: form.email,
-        password: form.password,
-        role: "STUDENT"
-      })
-    });
+    try {
+      setLoading(true);
+      setError("");
 
-    if (response.ok) {
-      alert("Registration successful");
-      navigate("/login");
-    } else {
-      alert("Registration failed");
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/users`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          password: form.password,
+          role: "STUDENT"
+        })
+      });
+
+      if (response.ok) {
+        navigate("/login");
+      } else {
+        const data = await response.text();
+        setError(data || "Registration failed. Please try again.");
+      }
+    } catch (err) {
+      console.error(err);
+      setError("Cannot connect to server. Please try again later.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -49,31 +78,39 @@ function Register() {
       <div className="auth-card">
         <h2>Register</h2>
 
+        {error && <p className="error-msg">{error}</p>}
+
         <input
           name="name"
           placeholder="Full Name"
+          value={form.name}
           onChange={handleChange}
         />
 
         <input
           name="email"
+          type="email"
           placeholder="Email"
+          value={form.email}
           onChange={handleChange}
         />
 
         <input
           type="password"
           name="password"
-          placeholder="Password"
+          placeholder="Password (min 6 characters)"
+          value={form.password}
           onChange={handleChange}
         />
 
-        <button onClick={handleRegister}>Create Account</button>
+        <button onClick={handleRegister} disabled={loading}>
+          {loading ? "Creating Account..." : "Create Account"}
+        </button>
 
         <Link to="/login">
-          <button className="link-btn">
+          <p className="link-text">
             Already have an account? Login
-          </button>
+          </p>
         </Link>
       </div>
     </div>

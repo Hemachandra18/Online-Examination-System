@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import Layout from "../components/Layout";
+import Layout from "../Components/Layout";
 
 function ExamPage() {
   const { id } = useParams();
@@ -14,7 +14,7 @@ function ExamPage() {
 
   // Fetch exam + questions
   useEffect(() => {
-    fetch(`http://localhost:8080/exams`)
+    fetch(`${import.meta.env.VITE_API_URL}/exams`)
       .then(res => res.json())
       .then(exams => {
         const exam = exams.find(e => e.id === parseInt(id));
@@ -33,7 +33,7 @@ function ExamPage() {
         }
       });
 
-    fetch(`http://localhost:8080/questions/exam/${id}`)
+    fetch(`${import.meta.env.VITE_API_URL}/questions/exam/${id}`)
       .then(res => res.json())
       .then(data => setQuestions(data));
   }, [id]);
@@ -73,6 +73,7 @@ function ExamPage() {
     });
 
     localStorage.removeItem(`exam_${id}`);
+    localStorage.setItem(`submitted_${id}`, "true");
     setScore(correct);
   };
 
